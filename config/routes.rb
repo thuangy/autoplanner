@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  scope '/api' do
-    get :food, to: 'foods#index'
-  end
+  post 'search/activities'
+  post 'search/restaurants'
 end
