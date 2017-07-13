@@ -1,17 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import Food from './components/food'
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom'
+
+
 
 ReactDOM.render(
 	(
-		<div>
-			<App />
-			<Survey />
-			{/*<Food /> */}
-		</div>
+		<Router>
+    		<App/>
+  		</Router>
 	), 
 	document.getElementById('root'));
 registerServiceWorker();
