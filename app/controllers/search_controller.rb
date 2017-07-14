@@ -39,13 +39,13 @@ class SearchController < ApplicationController
     url = "#{API_HOST}#{SEARCH_PATH}"
 
     searchQuery = {
-      term: params[:term],
       latitude: params[:latitude],
       longitude: params[:longitude],
-      limit: params[:days], 
+      limit: params[:days],
       sort_by: "rating",
-      radius: 800,
-      price: "1,2"
+      radius: 1000,
+      price: "1,2",
+      categories: "pastashops,ramen,sushi,shanghainese,dimsum,szechuan,vietnamese,taiwanese"
     }
 
     response = HTTP.auth(bearer_token).get(url, params: searchQuery)
