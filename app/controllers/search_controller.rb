@@ -39,8 +39,7 @@ class SearchController < ApplicationController
     url = "#{API_HOST}#{SEARCH_PATH}"
 
     searchQuery = {
-      latitude: params[:latitude],
-      longitude: params[:longitude],
+      location: params[:location],
       limit: params[:days],
       sort_by: "rating",
       radius: 1000,

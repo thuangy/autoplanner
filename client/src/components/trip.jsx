@@ -43,24 +43,27 @@ class Trip extends React.Component {
 					let clonedActivities = data.results.businesses;
 					for (let i = 0; i < this.state.days; i++) {
 						const randomActivity = clonedActivities[Math.floor(Math.random() * clonedActivities.length)];
-		      	if (randomActivity && !this.state.activityNames.includes(randomActivity.name)) {
+		      	//if (randomActivity && !this.state.activityNames.includes(randomActivity.name)) {
 							//console.log(randomActivity);
 							//console.log("added randomActivity to results");
 			      	//activityLatitude = randomActivity.coordinates.latitude;
 			      	//activityLongitude =  randomActivity.coordinates.longitude;
 
-			      	this.setState({activities: this.state.activities.concat([randomActivity])})
-			      	this.setState({activityNames: this.state.activityNames.concat([randomActivity.name])})
-			      	clonedActivities = clonedActivities.filter((a) => {
-			      		return a.name !== randomActivity.name
-			      	})
-						}
+		      	this.setState({activities: this.state.activities.concat([randomActivity])})
+		      	this.setState({activityNames: this.state.activityNames.concat([randomActivity.name])})
+		      	clonedActivities = clonedActivities.filter((a) => {
+		      		return a.name !== randomActivity.name
+		      	})
+						//}
 					}
 					console.log(this.state.activityNames);
 					for (let i = 0; i < this.state.activities.length; i++) {
-						const activityLatitude = this.state.activities[i].coordinates.latitude;
-						const activityLongitude = this.state.activities[i].coordinates.longitude;
-						this.foodSearch(activityLatitude, activityLongitude);
+						console.log("Activity i is ", this.state.activities[i].name);
+						const activityLocation = this.state.activities[i].location.display_address[0] + ", " + this.state.activities[i].location.display_address[1];
+						//const activityLatitude = this.state.activities[i].coordinates.latitude;
+						//const activityLongitude = this.state.activities[i].coordinates.longitude;
+						console.log("Activity i has location ", activityLocation)
+						this.foodSearch(activityLocation);
 					}
 	      	// console.log("HERE IS CLONED RESULTS");
 	      	// console.log(clonedActivities);
@@ -88,7 +91,7 @@ class Trip extends React.Component {
     );
 	}
 
-	foodSearch(latitude, longitude) {
+	foodSearch(location) {
 		console.log("here is food search");
 		//const tinaFaveFoods = ["Chinese", "Pasta", "Sushi", "Ramen", "Pho",];
 		request(
@@ -97,8 +100,7 @@ class Trip extends React.Component {
 	      method: 'POST',
 	      json: {
 	      	days: this.state.days * 3,
-	      	latitude: latitude,
-	      	longitude: longitude,
+	      	location: location,
 	      },
 	    },
       (err, httpResponse, foodData) => {
@@ -115,6 +117,7 @@ class Trip extends React.Component {
 			      	clonedFood = clonedFood.filter((f) => {
 			      		return f.name !== randomRestaurant.name
 			      	})
+							console.log("Location is ", location)
 			      	console.log(this.state.restaurantNames);
 			      	break;
 		      	}
@@ -143,9 +146,9 @@ class Trip extends React.Component {
 		if (activities.length === restaurants.length) {
 			const interleaved = [];
 			for (let i=0; i<activities.length; i++) {
-				interleaved.push(["Day " + (i + 1),
-					["What to do", activities[i]],
-					["What to eat", restaurants[i]]
+				interleaved.push([(i + 1),
+					activities[i],
+					restaurants[i]
 				])
 				// titles.push("Day " + (i + 1));
 				// interleaved.push(["What to do", activities[i]])
@@ -157,31 +160,43 @@ class Trip extends React.Component {
 			if (interleaved.length === 0) {
 				return (<div></div>)
 			} else {
-				const list = interleaved.map((result) => {
+				return interleaved.map((result) => {
 					console.log("result: ", result)
+
 					return (
-						<div style={{display: "flex", justifyContent: "space-around", alignItems: "center"}}>
-							<h2>
+						<tr>
+							<td>
 								{result[0]}
-							</h2>
-							<h4>
-								{result[1][0]}
-							</h4>
-							<li style={{listStyle: 'none'}}>
-								<a href={result[1][1].url}>
-									{result[1][1].name}
+							</td>
+							<td>
+								<a href={result[1].url}>
+									{result[1].name}
 								</a>
-							</li>
-							<h4>
-								{result[2][0]}
-							</h4>
-							<li style={{listStyle: 'none'}}>
-								<a href={result[2][1].url}>
-									{result[2][1].name}
+							</td>
+							<td>
+								<a href={result[2].url}>
+									{result[2].name}
 								</a>
-							</li>
-						</div>
+							</td>
+						</tr>
 					)
+					// return (
+					// 	<div style={{display: "flex", justifyContent: "space-around", alignItems: "center"}}>
+					// 		<h2>
+					// 			{result[0]}
+					// 		</h2>
+					// 		<li style={{listStyle: 'none'}}>
+					// 			<a href={result[1].url}>
+					// 				{result[1].name}
+					// 			</a>
+					// 		</li>
+					// 		<li style={{listStyle: 'none'}}>
+					// 			<a href={result[2].url}>
+					// 				{result[2].name}
+					// 			</a>
+					// 		</li>
+					// 	</div>
+					// )
 				});
 
 
@@ -207,13 +222,13 @@ class Trip extends React.Component {
 				// 	}
 
 				// })
-				return (
-					<ul style={{paddingLeft: "0px", display: "flex", flexWrap: "wrap"}}>
-						<div>
-							{list}
-						</div>
-					</ul>
-				)
+				// return (
+				// 	<ul style={{paddingLeft: "0px", display: "flex", flexWrap: "wrap"}}>
+				// 		<div>
+				// 			{list}
+				// 		</div>
+				// 	</ul>
+				// )
 			}
 		}
 
@@ -228,7 +243,20 @@ class Trip extends React.Component {
 	      <input value={this.state.location} onChange={(e) => this.updateLocation(e)}></input>
 	      <button onClick={() => this.activitySearch()}>Submit</button>
 	      <div id="results">
-		    	{this.renderResults()}
+					<table>
+						<tr>
+							<th>
+								Day
+							</th>
+							<th>
+								What to Do
+							</th>
+							<th>
+								What to Eat
+							</th>
+						</tr>
+						{this.renderResults()}
+					</table>
 		    </div>
 			</div>
 		)
