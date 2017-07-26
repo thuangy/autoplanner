@@ -19,6 +19,8 @@ class Trip extends React.Component {
 			 activityNames: [],
 			 restaurants: [],
 			 restaurantNames: [],
+			 foodGenres: localStorage.getItem("genres"),
+			 foodTypes: localStorage.getItem("types")
     }
   }
 
@@ -43,57 +45,26 @@ class Trip extends React.Component {
 					let clonedActivities = data.results.businesses;
 					for (let i = 0; i < this.state.days; i++) {
 						const randomActivity = clonedActivities[Math.floor(Math.random() * clonedActivities.length)];
-		      	//if (randomActivity && !this.state.activityNames.includes(randomActivity.name)) {
-							//console.log(randomActivity);
-							//console.log("added randomActivity to results");
-			      	//activityLatitude = randomActivity.coordinates.latitude;
-			      	//activityLongitude =  randomActivity.coordinates.longitude;
-
 		      	this.setState({activities: this.state.activities.concat([randomActivity])})
 		      	this.setState({activityNames: this.state.activityNames.concat([randomActivity.name])})
 		      	clonedActivities = clonedActivities.filter((a) => {
 		      		return a.name !== randomActivity.name
 		      	})
-						//}
 					}
 					console.log(this.state.activityNames);
 					for (let i = 0; i < this.state.activities.length; i++) {
 						console.log("Activity i is ", this.state.activities[i].name);
 						const activityLocation = this.state.activities[i].location.display_address[0] + ", " + this.state.activities[i].location.display_address[1];
-						//const activityLatitude = this.state.activities[i].coordinates.latitude;
-						//const activityLongitude = this.state.activities[i].coordinates.longitude;
 						console.log("Activity i has location ", activityLocation)
 						this.foodSearch(activityLocation);
 					}
-	      	// console.log("HERE IS CLONED RESULTS");
-	      	// console.log(clonedActivities);
-	      	// while (true) {
-	      	// 	console.log("inside activity while loop");
-	      	// 	const randomActivity = clonedActivities[Math.floor(Math.random() * clonedActivities.length)];
-		      // 	if (randomActivity && !this.state.activityNames.includes(randomActivity.name)) {
-					// 		console.log(randomActivity);
-					// 		console.log("added randomActivity to results");
-			    //   	activityLatitude = randomActivity.coordinates.latitude;
-			    //   	activityLongitude =  randomActivity.coordinates.longitude;
-					//
-			    //   	this.setState({activities: this.state.results.concat([randomActivity])})
-			    //   	this.setState({activityNames: this.state.resultNames.concat([randomActivity.name])})
-			    //   	clonedActivities = clonedActivities.filter((a) => {
-			    //   		return a.name !== randomActivity.name
-			    //   	})
-			    //   	//this.foodSearch(activityLatitude, activityLongitude)
-			    //   	break;
-		      // 	}
-	      	// }
 				}
-
       }
     );
 	}
 
 	foodSearch(location) {
 		console.log("here is food search");
-		//const tinaFaveFoods = ["Chinese", "Pasta", "Sushi", "Ramen", "Pho",];
 		request(
 	    {
 	      url: `http://localhost:3001/search/restaurants`,
@@ -101,6 +72,7 @@ class Trip extends React.Component {
 	      json: {
 	      	days: this.state.days * 3,
 	      	location: location,
+					categories: this.state.foodGenres + "," + this.state.foodTypes
 	      },
 	    },
       (err, httpResponse, foodData) => {
@@ -126,10 +98,8 @@ class Trip extends React.Component {
 					this.setState({restaurants: this.state.restaurants.concat([{name: "No Good Restaurants Nearby"}])})
 					this.setState({restaurantNames: this.state.restaurantNames.concat(["No Good Restaurants Nearby"])})
 				}
-
       }
     );
-
 	}
 
 	updateLocation(e) {
@@ -150,9 +120,6 @@ class Trip extends React.Component {
 					activities[i],
 					restaurants[i]
 				])
-				// titles.push("Day " + (i + 1));
-				// interleaved.push(["What to do", activities[i]])
-				// interleaved.push(["What to eat", restaurants[i]])
 			}
 			console.log("activities: ", activities)
 			console.log("restaurants: ", restaurants)
@@ -180,58 +147,9 @@ class Trip extends React.Component {
 							</td>
 						</tr>
 					)
-					// return (
-					// 	<div style={{display: "flex", justifyContent: "space-around", alignItems: "center"}}>
-					// 		<h2>
-					// 			{result[0]}
-					// 		</h2>
-					// 		<li style={{listStyle: 'none'}}>
-					// 			<a href={result[1].url}>
-					// 				{result[1].name}
-					// 			</a>
-					// 		</li>
-					// 		<li style={{listStyle: 'none'}}>
-					// 			<a href={result[2].url}>
-					// 				{result[2].name}
-					// 			</a>
-					// 		</li>
-					// 	</div>
-					// )
 				});
-
-
-				// 	if (typeof result === 'string') {
-				// 		return (
-				// 			<h2 style={{display: "flex", justifyContent: "space-around"}}>
-				// 				{result}
-				// 			</h2>
-				// 		)
-				// 	} else {
-				// 		return(
-				// 			<div style={{display: "flex", justifyContent: "space-around", alignItems: "center"}}>
-				// 				<h4>
-				// 					{result[0]}
-				// 				</h4>
-				// 				<li style={{listStyle: 'none'}}>
-				// 					<a href={result[1].url}>
-				// 						{result[1].name}
-				// 					</a>
-				// 				</li>
-				// 			</div>
-				// 		)
-				// 	}
-
-				// })
-				// return (
-				// 	<ul style={{paddingLeft: "0px", display: "flex", flexWrap: "wrap"}}>
-				// 		<div>
-				// 			{list}
-				// 		</div>
-				// 	</ul>
-				// )
 			}
 		}
-
 	}
 
 	render() {

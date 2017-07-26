@@ -44,7 +44,7 @@ class SearchController < ApplicationController
       sort_by: "rating",
       radius: 1000,
       price: "1,2",
-      categories: "pastashops,ramen,sushi,shanghainese,dimsum,szechuan,vietnamese,taiwanese"
+      categories: params[:categories]
     }
 
     response = HTTP.auth(bearer_token).get(url, params: searchQuery)

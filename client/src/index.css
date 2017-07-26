@@ -11,3 +11,29 @@ body {
 #food-search {
   margin-top: 5em;
 }
+
+.food-genre-wrapper {
+  margin: 20px;
+}
+
+.food-genre-row {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+}
+
+.selected-false {
+  background-color: darkgray;
+  color: white;
+  padding: 10px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.selected-true {
+  background-color: lightblue;
+  color: white;
+  padding: 10px;
+  border-radius: 20px;
+  cursor: pointer;
+}
