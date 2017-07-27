@@ -1,3 +1,5 @@
+@import './font-awesome/css/font-awesome.css';
+
 body {
   margin: 0;
   padding: 0;
@@ -108,4 +110,23 @@ td, th {
 
 .quiz-question {
   text-align: center;
+}
+
+#loading-arrow {
+  animation: spin infinite 2s linear;
+}
+
+@keyframes spin {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+#easter-egg {
+  color: #413839;
+  content: "hidden...";
+}
+
+#easter-egg:hover:after{
+  color: white;
+  content: "new content";
 }

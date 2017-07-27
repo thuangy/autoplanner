@@ -179,7 +179,7 @@ class Trip extends React.Component {
 		} else if (this.state.searching){
 			return (
 				<div>
-					<img src={loadingArrow}></img>
+					<img id="loading-arrow" src={loadingArrow}></img>
 					<p>Loading...</p>
 				</div>
 			)
