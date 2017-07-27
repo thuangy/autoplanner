@@ -249,3 +249,101 @@ export function foodTypes() {
     }
   ]
 }
+
+export function activityTypes() {
+  return [
+    {
+      displayName: "Adult Entertainment",
+      id: "adultentertainment",
+      selected: false,
+    }, {
+      displayName: "Amusement Parks",
+      id: "amusementparks",
+      selected: false,
+    }, {
+      displayName: "Beaches",
+      id: "beaches",
+      selected: false,
+    }, {
+      displayName: "Beauty & Spas",
+      id: "beautysvc",
+      selected: false,
+    }, {
+      displayName: "Botanical Gardens",
+      id: "gardens",
+      selected: false,
+    }, {
+      displayName: "Campgrounds",
+      id: "campgrounds",
+      selected: false,
+    }, {
+      displayName: "Casinos",
+      id: "casinos",
+      selected: false,
+    }, {
+      displayName: "Colleges & Universities",
+      id: "collegeuniv",
+      selected: false,
+    }, {
+      displayName: "Comedy Clubs",
+      id: "comedyclubs",
+      selected: false,
+    }, {
+      displayName: "Festivals",
+      id: "festivals",
+      selected: false,
+    }, {
+      displayName: "Flea Markets",
+      id: "fleamarkets",
+      selected: false,
+    }, {
+      displayName: "Hiking",
+      id: "hiking",
+      selected: false,
+    }, {
+      displayName: "Lakes",
+      id: "lakes",
+      selected: false,
+    }, {
+      displayName: "Landmarks & Historical Buildings",
+      id: "landmarks",
+      selected: false,
+    }, {
+      displayName: "Museums",
+      id: "museums",
+      selected: false,
+    }, {
+      displayName: "Music Venues",
+      id: "musicvenues",
+      selected: false,
+    }, {
+      displayName: "Parks",
+      id: "parks",
+      selected: false,
+    }, {
+      displayName: "Performing Arts",
+      id: "theater",
+      selected: false,
+    }, {
+      displayName: "Rock Climbing",
+      id: "rock_climbing",
+      selected: false,
+    }, {
+      displayName: "Shopping",
+      id: "shopping",
+      selected: false,
+    }, {
+      displayName: "Tours",
+      id: "tours",
+      selected: false,
+    }, {
+      displayName: "Water Parks",
+      id: "waterparks",
+      selected: false,
+    }, {
+      displayName: "Zoos",
+      id: "zoos",
+      selected: false,
+    }
+  ]
+}

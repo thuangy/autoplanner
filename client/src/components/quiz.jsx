@@ -7,7 +7,7 @@ import {
   Route,
   Link
 } from 'react-router-dom';
-import { foodGenres, foodTypes } from '../sharedCategories.js';
+import { foodGenres, foodTypes, activityTypes } from '../sharedCategories.js';
 
 
 
@@ -17,13 +17,15 @@ class Quiz extends React.Component {
 	  super(props);
 		this.state = {
         foodGenres: foodGenres(),
-        foodTypes: foodTypes()
+        foodTypes: foodTypes(),
+        activityTypes: activityTypes(),
+        page: 1,
 		};
 	}
 
 	renderSubmitButton() {
     return (
-      <button onClick={() => this.props.toggleSubmitted(this.state.foodGenres, this.state.foodTypes)}>
+      <button id="submit-quiz-button" onClick={() => this.props.toggleSubmitted(this.state.foodGenres, this.state.foodTypes, this.state.activityTypes)}>
         Submit
       </button>
     )
@@ -43,6 +45,14 @@ class Quiz extends React.Component {
     copiedFood[i].selected = !copiedFood[i].selected;
     this.setState({
       foodTypes: copiedFood,
+    })
+  }
+
+  toggleActivityTypeSelected(i) {
+    const copiedActivities = this.state.activityTypes;
+    copiedActivities[i].selected = !copiedActivities[i].selected;
+    this.setState({
+      activityTypes: copiedActivities,
     })
   }
 
@@ -73,17 +83,20 @@ class Quiz extends React.Component {
       )
     })
     return (
-      <div className="food-genre-wrapper">
-        <h2>What are your favorite types of cuisine</h2>
-        <div className="food-genre-row">
-          {row1}
+      <div className="quiz-question">
+        <div className="type-wrapper">
+          <h2>What are your favorite types of cuisine?</h2>
+          <div className="type-row">
+            {row1}
+          </div>
+          <div className="type-row">
+            {row2}
+          </div>
+          <div className="type-row">
+            {row3}
+          </div>
         </div>
-        <div className="food-genre-row">
-          {row2}
-        </div>
-        <div className="food-genre-row">
-          {row3}
-        </div>
+        {this.renderNextPageButton()}
       </div>
     )
   }
@@ -114,27 +127,89 @@ class Quiz extends React.Component {
       )
     })
     return (
-      <div className="food-genre-wrapper">
-        <h2>What are some of your other favorite foods?</h2>
-        <div className="food-genre-row">
-          {row1}
+      <div className="quiz-question">
+        <div className="type-wrapper">
+          <h2>What are some of your other favorite foods?</h2>
+          <div className="type-row">
+            {row1}
+          </div>
+          <div className="type-row">
+            {row2}
+          </div>
+          <div className="type-row">
+            {row3}
+          </div>
         </div>
-        <div className="food-genre-row">
-          {row2}
-        </div>
-        <div className="food-genre-row">
-          {row3}
-        </div>
+        {this.renderSubmitButton()}
       </div>
     )
+  }
+
+  renderActivityTypes() {
+    const row1 = this.state.activityTypes.slice(0, 7).map((activity, i) => {
+      const selected = "selected-" + activity.selected
+      return (
+        <span onClick={() => this.toggleActivityTypeSelected(i)} className={selected}>
+          {activity.displayName}
+        </span>
+      )
+    })
+    const row2 = this.state.activityTypes.slice(7, 14).map((activity, i) => {
+      const selected = "selected-" + activity.selected
+      return (
+        <span onClick={() => this.toggleActivityTypeSelected(i+7)} className={selected}>
+          {activity.displayName}
+        </span>
+      )
+    })
+    const row3 = this.state.activityTypes.slice(14, 23).map((activity, i) => {
+      const selected = "selected-" + activity.selected
+      return (
+        <span onClick={() => this.toggleActivityTypeSelected(i+14)} className={selected}>
+          {activity.displayName}
+        </span>
+      )
+    })
+    return (
+      <div className="quiz-question">
+        <div className="type-wrapper">
+          <h2>What are your favorite types of vacation activities?</h2>
+          <div className="type-row">
+            {row1}
+          </div>
+          <div className="type-row">
+            {row2}
+          </div>
+          <div className="type-row">
+            {row3}
+          </div>
+        </div>
+        {this.renderNextPageButton()}
+      </div>
+    )
+  }
+
+  renderNextPageButton() {
+    return <button id="next-page-button" onClick={() => {this.setState({page: this.state.page + 1})}}>Next ›</button>
+  }
+
+  renderPage() {
+    switch(this.state.page) {
+      case 1:
+        return this.renderActivityTypes()
+      case 2:
+        return this.renderFoodGenres()
+      case 3:
+        return this.renderFoodTypes()
+      default:
+        return(<p>Unknown Page</p>)
+    }
   }
 
 	render() {
 		return (
 			<div>
-        {this.renderFoodGenres()}
-        {this.renderFoodTypes()}
-        {this.renderSubmitButton()}
+        {this.renderPage()}
 			</div>
 		)
 	}

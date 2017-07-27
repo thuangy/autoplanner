@@ -2,6 +2,7 @@ import React from 'react';
 import { getFoodSearch } from '../actions/food.js';
 import request from 'request';
 import _ from 'underscore';
+import loadingArrow from '../images/loading-arrow.png'
 
 
 
@@ -19,15 +20,16 @@ class Trip extends React.Component {
 			 activityNames: [],
 			 restaurants: [],
 			 restaurantNames: [],
-			 foodGenres: localStorage.getItem("genres"),
-			 foodTypes: localStorage.getItem("types")
+			 foodGenres: localStorage.getItem("foodGenres"),
+			 foodTypes: localStorage.getItem("foodTypes"),
+			 activityTypes: localStorage.getItem("activityTypes"),
+			 searching: false,
     }
   }
 
 	activitySearch() {
 		console.log("here is activity search");
-		this.setState({results: [], resultNames: [], activities: [], activityNames: [], restaurants: [], restaurantNames: []})
-
+		this.setState({results: [], resultNames: [], activities: [], activityNames: [], restaurants: [], restaurantNames: [], searching: true})
 		let activityLatitude;
 		let activityLongitude;
 		request(
@@ -37,6 +39,7 @@ class Trip extends React.Component {
 	      json: {
 	      	location: this.state.location,
 	      	days: this.state.days * 5,
+					categories: this.state.activityTypes,
 	      },
 	    },
       (err, httpResponse, data) => {
@@ -152,29 +155,58 @@ class Trip extends React.Component {
 		}
 	}
 
+	renderTable() {
+		if (this.state.activities.length > 0 && this.state.activities.length === this.state.restaurants.length) {
+			if (this.state.searching) {
+				this.setState({searching: false})
+			}
+			return (
+				<table>
+					<tr>
+						<th>
+							Day
+						</th>
+						<th>
+							What to Do
+						</th>
+						<th>
+							What to Eat
+						</th>
+					</tr>
+					{this.renderResults()}
+				</table>
+			)
+		} else if (this.state.searching){
+			return (
+				<div>
+					<img src={loadingArrow}></img>
+					<p>Loading...</p>
+				</div>
+			)
+		}
+
+	}
+
 	render() {
 		return (
 			<div>
-				<label>How many days?</label>
-	      <input value={this.state.days} onChange={(e) => this.updateDays(e)}></input>
-				<label>Location</label>
-	      <input value={this.state.location} onChange={(e) => this.updateLocation(e)}></input>
-	      <button onClick={() => this.activitySearch()}>Submit</button>
+				<div id="search-query-wrapper">
+					<div id="search-query">
+						<div id="search-query-days">
+							<label id="how-many-days-label">How many days?</label>
+				      <input id="how-many-days-input" value={this.state.days} onChange={(e) => this.updateDays(e)}></input>
+						</div>
+						<div id="search-query-location">
+							<label id="location-label">Location?</label>
+				      <input id="location-input" value={this.state.location} onChange={(e) => this.updateLocation(e)}></input>
+						</div>
+					</div>
+				</div>
+				<div className="button-wrapper">
+					<button id="search-result-button" onClick={() => this.activitySearch()}>Submit</button>
+				</div>
 	      <div id="results">
-					<table>
-						<tr>
-							<th>
-								Day
-							</th>
-							<th>
-								What to Do
-							</th>
-							<th>
-								What to Eat
-							</th>
-						</tr>
-						{this.renderResults()}
-					</table>
+					{this.renderTable()}
 		    </div>
 			</div>
 		)

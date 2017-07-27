@@ -12,14 +12,18 @@ body {
   margin-top: 5em;
 }
 
-.food-genre-wrapper {
+.type-wrapper {
   margin: 20px;
 }
 
-.food-genre-row {
+.type-row {
   display: flex;
   justify-content: space-around;
   padding: 20px;
+}
+
+.button-wrapper {
+  text-align: center;
 }
 
 .selected-false {
@@ -31,9 +35,77 @@ body {
 }
 
 .selected-true {
-  background-color: lightblue;
+  background-color: steelblue;
   color: white;
   padding: 10px;
   border-radius: 20px;
   cursor: pointer;
+}
+
+#results {
+  display: flex;
+  justify-content: center;
+}
+
+#search-query {
+  margin: 20px;
+  width: 45%;
+  display: flex;
+  justify-content: space-around;
+}
+
+#how-many-days-input, #location-input {
+  float: left;
+  clear: left;
+  font-size: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 2px solid lightgrey;
+}
+
+#how-many-days-label, #location-label {
+  float: left;
+  padding-bottom: 20px;
+  font-size: 20px;
+}
+
+#search-result-button {
+  margin-bottom: 20px;
+}
+
+#search-query-wrapper {
+  display: flex;
+  justify-content: space-around;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+td, th, table {
+  padding: 15px;
+  font-size: 20px;
+}
+
+td, th {
+  border: 5px solid lightblue;
+}
+
+#search-result-button, #submit-quiz-button, #next-page-button {
+  border: none;
+  background-color: steelblue;
+  color: white;
+  font-size: 20px;
+  padding: 10px;
+  border-radius: 10px;
+  outline: none;
+  cursor: pointer;
+}
+
+#next-page-button {
+  background-color: #413839;
+}
+
+.quiz-question {
+  text-align: center;
 }

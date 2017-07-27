@@ -59,7 +59,7 @@ class SearchController < ApplicationController
       location: params[:location],
       limit: params[:days],
       sort_by: "rating",
-      categories: "parks,gardens,landmarks"
+      categories: params[:categories]
     }
 
     response = HTTP.auth(bearer_token).get(url, params: searchQuery)

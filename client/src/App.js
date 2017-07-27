@@ -13,24 +13,25 @@ class App extends Component {
     this.toggleSubmitted = this.toggleSubmitted.bind(this)
   }
 
-  toggleSubmitted(foodGenres, foodTypes) {
-    const likedGenres = foodGenres.filter((genre) => genre.selected).map((genre) => genre.id)
-    const likedTypes = foodTypes.filter((type) => type.selected).map((type) => type.id)
-    localStorage.setItem("genres", likedGenres)
-    localStorage.setItem("types", likedTypes)
+  toggleSubmitted(foodGenres, foodTypes, activityTypes) {
+    const likedFoodGenres = foodGenres.filter((genre) => genre.selected).map((genre) => genre.id)
+    const likedFoodTypes = foodTypes.filter((type) => type.selected).map((type) => type.id)
+    const likedActivityTypes = activityTypes.filter((type) => type.selected).map((type) => type.id)
+    localStorage.setItem("foodGenres", likedFoodGenres)
+    localStorage.setItem("foodTypes", likedFoodTypes)
+    localStorage.setItem("activityTypes", likedActivityTypes)
     this.setState({
       quizSubmitted: true
     })
   }
 
   render() {
-    //const quizOrTrip = (this.state.quizSubmitted || (localStorage.getItem("types") && localStorage.getItem("genres"))) ? <Trip /> : <Quiz toggleSubmitted={this.toggleSubmitted}/>;
-    const quizOrTrip = (this.state.quizSubmitted) ? <Trip /> : <Quiz toggleSubmitted={this.toggleSubmitted}/>;
+    const quizOrTrip = (this.state.quizSubmitted || (localStorage.getItem("activityTypes") && localStorage.getItem("foodTypes") && localStorage.getItem("foodGenres"))) ? <Trip /> : <Quiz toggleSubmitted={this.toggleSubmitted}/>;
+    //const quizOrTrip = (this.state.quizSubmitted) ? <Trip /> : <Quiz toggleSubmitted={this.toggleSubmitted}/>;
     return (
-      <div className="App">
+      <div>
         <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>What should I do and eat?</h2>
+          <h1>What should I do and eat?</h1>
         </div>
 
         {quizOrTrip}
