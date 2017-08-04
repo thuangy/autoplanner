@@ -1,2 +1,2 @@
-web: cd client && npm start && npm install react-scripts
+web: cd client && npm install && npm start
 api: bundle exec rails s -p 3001
