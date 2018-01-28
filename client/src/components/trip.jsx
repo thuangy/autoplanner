@@ -34,7 +34,7 @@ class Trip extends React.Component {
 		let activityLongitude;
 		request(
 	    {
-	      url: `http://localhost:3001/search/activities`,
+	      url: `http://localhost:3000/search/activities`,
 	      method: 'POST',
 	      json: {
 	      	location: this.state.location,
@@ -43,25 +43,26 @@ class Trip extends React.Component {
 	      },
 	    },
       (err, httpResponse, data) => {
-      	console.log(data.results);
-				if (data.results) {
-					let clonedActivities = data.results.businesses;
-					for (let i = 0; i < this.state.days; i++) {
-						const randomActivity = clonedActivities[Math.floor(Math.random() * clonedActivities.length)];
-		      	this.setState({activities: this.state.activities.concat([randomActivity])})
-		      	this.setState({activityNames: this.state.activityNames.concat([randomActivity.name])})
-		      	clonedActivities = clonedActivities.filter((a) => {
-		      		return a.name !== randomActivity.name
-		      	})
-					}
-					console.log(this.state.activityNames);
-					for (let i = 0; i < this.state.activities.length; i++) {
-						console.log("Activity i is ", this.state.activities[i].name);
-						const activityLocation = this.state.activities[i].location.display_address[0] + ", " + this.state.activities[i].location.display_address[1];
-						console.log("Activity i has location ", activityLocation)
-						this.foodSearch(activityLocation);
-					}
-				}
+		if (data && data.results) {
+			let clonedActivities = data.results.businesses;
+			for (let i = 0; i < this.state.days; i++) {
+				const randomActivity = clonedActivities[Math.floor(Math.random() * clonedActivities.length)];
+      	this.setState({activities: this.state.activities.concat([randomActivity])})
+      	this.setState({activityNames: this.state.activityNames.concat([randomActivity.name])})
+      	clonedActivities = clonedActivities.filter((a) => {
+      		return a.name !== randomActivity.name
+      	})
+			}
+			console.log(this.state.activityNames);
+			for (let i = 0; i < this.state.activities.length; i++) {
+				console.log("Activity i is ", this.state.activities[i].name);
+				const activityLocation = this.state.activities[i].location.display_address[0] + ", " + this.state.activities[i].location.display_address[1];
+				console.log("Activity i has location ", activityLocation)
+				this.foodSearch(activityLocation);
+			}
+		} else {
+			console.log("no results")
+		}
       }
     );
 	}
@@ -70,7 +71,7 @@ class Trip extends React.Component {
 		console.log("here is food search");
 		request(
 	    {
-	      url: `http://localhost:3001/search/restaurants`,
+	      url: `http://localhost:3000/search/restaurants`,
 	      method: 'POST',
 	      json: {
 	      	days: this.state.days * 3,

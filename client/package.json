@@ -3,15 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "react-scripts": "1.0.7",
     "font-awesome": "^4.7.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-router": "^4.1.1",
-    "react-router-dom": "^4.1.1"
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "^1.1.0",
+    "underscore": "^1.8.3"
   },
   "scripts": {
-    "start": "npm install react-scripts && react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
