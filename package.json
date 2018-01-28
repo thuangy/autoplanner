@@ -2,5 +2,8 @@
   "name": "autoplanner",
   "engines": {
     "node": "6.3.1"
+  },
+  "scripts": {
+    "start": "cd client && npm install"
   }
 }
