@@ -140,12 +140,12 @@ class Trip extends React.Component {
 								{result[0]}
 							</td>
 							<td>
-								<a href={result[1].url}>
+								<a href={result[1].url} target="_blank">
 									{result[1].name}
 								</a>
 							</td>
 							<td>
-								<a href={result[2].url}>
+								<a href={result[2].url} target="_blank">
 									{result[2].name}
 								</a>
 							</td>
