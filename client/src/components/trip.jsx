@@ -34,7 +34,7 @@ class Trip extends React.Component {
 		let activityLongitude;
 		request(
 	    {
-	      url: `/search/activities`,
+	      url: `http://glacial-badlands-77103.herokuapp.com/search/activities`,
 	      method: 'POST',
 	      json: {
 	      	location: this.state.location,
@@ -71,7 +71,7 @@ class Trip extends React.Component {
 		console.log("here is food search");
 		request(
 	    {
-	      url: `/search/restaurants`,
+	      url: `http://glacial-badlands-77103.herokuapp.com/search/restaurants`,
 	      method: 'POST',
 	      json: {
 	      	days: this.state.days * 3,
