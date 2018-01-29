@@ -11,3 +11,7 @@ end
 
 desc 'Start development server'
 task :start => 'start:development'
+
+desc 'Stub do-nothing jobs:work task to eliminate Heroku log complaints'
+task 'jobs:work' do
+end
